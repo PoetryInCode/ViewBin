@@ -4,6 +4,8 @@ This really is just a slightly prettier version of hexdump. There isn't much to 
 
 ![demo](./demo.gif)
 
+To view the flag/help screen run with `-h` or `--help`
+
 ## Building
 
 ### Linux
