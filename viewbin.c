@@ -104,7 +104,7 @@ int main(int argc, char **argv) {
 	fread(text,sizeof(char),length,file);
 	int i=0,byte_index=0,bytes_shown=0;
 	while(i < lines) {
-		printf("\033[33m[%08x]>\033[39m ",byte_index);
+		printf("\033[32m[%08x]>\033[39m ",byte_index);
 		int a=0;
 		bytes_shown=0;
 		while(a<max_per_row) {
@@ -147,9 +147,9 @@ int main(int argc, char **argv) {
 		i++;
 	}
 	if((12+(bytes_shown*chunk_size)+11) < width) {
-		printf("\033[33m<[%08x]\033[39m",byte_index);
+		printf("\033[32m<[%08x]\033[39m",byte_index);
 	} else {
-		printf("\n\033[33m<[%08x]\033[39m",byte_index);
+		printf("\n\033[32m<[%08x]\033[39m",byte_index);
 	}
 	free((void *)original);
 	return 0;
