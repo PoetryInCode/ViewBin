@@ -35,6 +35,8 @@ void help() {
 	printf("\t-h,--help\n\t\tDisplays this help message\n\n");
 }
 
+const char block[4] = {(char)0xe2,(char)0xac,(char)0x9c,'\0'};
+
 int main(int argc, char **argv) {
 	int print_mode=HEX,file_index=1,file_found=0;
 	if(!(argc > 1)) {
@@ -78,7 +80,7 @@ int main(int argc, char **argv) {
 	struct winsize w;
 	ioctl(0, TIOCGWINSZ, &w);
 
-	int width=w.ws_col, height=w.ws_row;
+	int width=w.ws_col;
 
 	int chunk_size=3;
 	if(print_mode == INT) {
@@ -97,6 +99,7 @@ int main(int argc, char **argv) {
 	}
 
 	char *text = (char *)malloc(length*sizeof(char));
+	char *end = text+(length*sizeof(char));
 	size_t original = (size_t)text;
 	fread(text,sizeof(char),length,file);
 	int i=0,byte_index=0,bytes_shown=0;
@@ -105,7 +108,7 @@ int main(int argc, char **argv) {
 		int a=0;
 		bytes_shown=0;
 		while(a<max_per_row) {
-			if(text <= *(&text+1) || *text != '\0') {
+			if(text <= end) {
 				if(print_mode == HEX) {
 					printf("%x%x ",(char)(*text & 0x0F),(char)(*text >> 4 & 0x0F));
 				} else if(print_mode == INT) {
@@ -117,6 +120,8 @@ int main(int argc, char **argv) {
 					} else if(*text == '\t') {
 						printf("\\t ");
 						a++;
+					} else if(*text == ' ') {
+						printf("%s ",block);
 					} else {
 						printf("%c ",*text);
 					}
